@@ -104,9 +104,13 @@ def create_lab_report(lab_dir):
     match = re.search(r'Lab(\w+)', lab_path.name)
     if match:
         lab_num = match.group(1).lower()
+        output_file = lab_path / f"lab{lab_num}.pdf"
     else:
-        lab_num = lab_path.name.lower()
-    output_file = lab_path / f"lab{lab_num}.pdf"
+        # If no match, use the directory name as-is but ensure it ends with .pdf
+        base_name = lab_path.name.lower()
+        if not base_name.endswith('.pdf'):
+            base_name += '.pdf'
+        output_file = lab_path / base_name
     
     # Create PDF document
     doc = SimpleDocTemplate(str(output_file), pagesize=letter,
@@ -198,17 +202,75 @@ def create_lab_report(lab_dir):
         print(f"Error generating PDF: {e}")
         return False
 
+def find_lab_directory(input_name):
+    """Find the actual lab directory based on flexible input matching"""
+    current_dir = Path.cwd()
+    
+    # If it's an absolute path that exists, use it
+    if os.path.isabs(input_name) and Path(input_name).exists():
+        return input_name
+    
+    # Look for directories that match the input
+    possible_matches = []
+    
+    for item in current_dir.iterdir():
+        if item.is_dir():
+            item_name = item.name.lower()
+            input_lower = input_name.lower()
+            
+            # Exact match (case-insensitive)
+            if item_name == input_lower:
+                return str(item)
+            
+            # Check if input is a lab number/identifier
+            lab_match = re.search(r'(\d+[a-z]*)', input_lower)
+            if lab_match:
+                lab_id = lab_match.group(1)
+                # Match Lab{number}, lab{number}, Lab{number}a, etc.
+                if re.match(rf'lab{re.escape(lab_id)}$', item_name):
+                    if str(item) not in possible_matches:
+                        possible_matches.append(str(item))
+            
+            # Partial matching - if input contains part of directory name
+            elif input_lower in item_name or item_name in input_lower:
+                if str(item) not in possible_matches:
+                    possible_matches.append(str(item))
+    
+    if len(possible_matches) == 1:
+        return possible_matches[0]
+    elif len(possible_matches) > 1:
+        print(f"Multiple directories match '{input_name}':")
+        for match in possible_matches:
+            print(f"  - {Path(match).name}")
+        print("Please be more specific.")
+        return None
+    else:
+        print(f"No lab directory found matching '{input_name}'")
+        print("Available lab directories:")
+        lab_dirs = [d.name for d in current_dir.iterdir() 
+                   if d.is_dir() and re.match(r'lab\w*', d.name.lower())]
+        if lab_dirs:
+            for lab_dir in sorted(lab_dirs):
+                print(f"  - {lab_dir}")
+        else:
+            print("  No lab directories found")
+        return None
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python3 generate_lab_report.py <lab_directory>")
         print("Example: python3 generate_lab_report.py Lab1")
+        print("         python3 generate_lab_report.py lab1")
+        print("         python3 generate_lab_report.py 1")
+        print("         python3 generate_lab_report.py 7")
         sys.exit(1)
     
-    lab_directory = sys.argv[1]
+    input_name = sys.argv[1]
     
-    # Convert to absolute path if relative
-    if not os.path.isabs(lab_directory):
-        lab_directory = os.path.join(os.getcwd(), lab_directory)
+    # Find the actual lab directory
+    lab_directory = find_lab_directory(input_name)
+    if not lab_directory:
+        sys.exit(1)
     
     success = create_lab_report(lab_directory)
     sys.exit(0 if success else 1)

@@ -20,6 +20,7 @@ This tool automates the creation of lab reports by scanning directories containi
 
 - **Automatic PDF Generation**: Converts directory structures with screenshots into professional lab reports
 - **Flexible Directory Structure**: Supports both "task1" and "task 1" naming conventions  
+- **Smart Lab Matching**: Case-insensitive and flexible lab directory matching (supports "Lab1", "lab1", "1", etc.)
 - **Professional Formatting**: Generates reports with proper headers, task sections, and image optimization
 - **Image Optimization**: Automatically resizes and optimizes screenshots for reasonable PDF file sizes
 - **Cross-Platform**: Works on macOS, Windows, and Linux
@@ -122,7 +123,11 @@ Lab1/
 
 2. **Generate a lab report:**
    ```bash
-   python3 generate_lab_report.py Lab1
+   # All of these work the same way:
+   python3 generate_lab_report.py Lab1   # Exact directory name
+   python3 generate_lab_report.py lab1   # Case-insensitive
+   python3 generate_lab_report.py LAB1   # Any case
+   python3 generate_lab_report.py 1      # Just the number
    ```
 
 3. **Find your generated PDF:**
@@ -206,8 +211,9 @@ The configuration file is automatically excluded from git commits (in `.gitignor
 - Ensure you've activated the virtual environment
 - Run `pip install -r requirements.txt`
 
-**AttributeError: 'NoneType' object has no attribute 'group'**
-- Check that your directory follows the naming convention (e.g., "Lab1", "Lab6a")
+**No lab directory found matching 'xyz'**
+- The script will show available lab directories to help you choose the correct one
+- Use any case (Lab1, lab1, LAB1) or just the number (1, 7, 6a)
 
 **No screenshots found**
 - Verify screenshots are in the correct task directories
