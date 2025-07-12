@@ -1,6 +1,6 @@
 # CIS44F Lab Report Generator
 
-A Python-based tool for automatically generating professional PDF lab reports from organized screenshot directories. Originally created for CIS44F (Linux System Administration) at De Anza College during Summer 2025.
+A Python-based tool for automatically generating professional PDF lab reports from organized screenshot directories. Originally created for CIS44F (Introduction to Big Data Analytics) at De Anza College during Summer 2025.
 
 ## Overview
 
@@ -196,7 +196,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Created for CIS44F (Linux System Administration) at De Anza College
+- Created for CIS44F (Introduction to Big Data Analytics) at De Anza College
 - Summer 2025 semester
 - Built with ReportLab and Pillow for professional PDF generation
 
