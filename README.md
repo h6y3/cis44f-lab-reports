@@ -2,6 +2,16 @@
 
 A Python-based tool for automatically generating professional PDF lab reports from organized screenshot directories. Originally created for CIS44F (Introduction to Big Data Analytics) at De Anza College during Summer 2025.
 
+## Quick Start
+
+```bash
+git clone https://github.com/h6y3/cis44f-lab-reports.git
+cd cis44f-lab-reports
+./install.sh
+source lab_report_env/bin/activate
+python3 generate_lab_report.py Lab1
+```
+
 ## Overview
 
 This tool automates the creation of lab reports by scanning directories containing task-organized screenshots and generating formatted PDF documents. Perfect for students who need to submit lab documentation with consistent formatting.
@@ -9,10 +19,12 @@ This tool automates the creation of lab reports by scanning directories containi
 ## Features
 
 - **Automatic PDF Generation**: Converts directory structures with screenshots into professional lab reports
-- **Flexible Directory Structure**: Supports both "task1" and "task 1" naming conventions
+- **Flexible Directory Structure**: Supports both "task1" and "task 1" naming conventions  
 - **Professional Formatting**: Generates reports with proper headers, task sections, and image optimization
+- **Image Optimization**: Automatically resizes and optimizes screenshots for reasonable PDF file sizes
 - **Cross-Platform**: Works on macOS, Windows, and Linux
 - **Easy Installation**: Simple setup with virtual environment management
+- **Batch Processing**: Generate reports for multiple labs quickly
 
 ## Installation
 
@@ -25,7 +37,7 @@ This tool automates the creation of lab reports by scanning directories containi
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/cis44f-lab-reports.git
+   git clone https://github.com/h6y3/cis44f-lab-reports.git
    cd cis44f-lab-reports
    ```
 
@@ -43,7 +55,7 @@ This tool automates the creation of lab reports by scanning directories containi
 
 1. **Clone the repository:**
    ```cmd
-   git clone https://github.com/yourusername/cis44f-lab-reports.git
+   git clone https://github.com/h6y3/cis44f-lab-reports.git
    cd cis44f-lab-reports
    ```
 
@@ -66,7 +78,7 @@ This tool automates the creation of lab reports by scanning directories containi
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/cis44f-lab-reports.git
+   git clone https://github.com/h6y3/cis44f-lab-reports.git
    cd cis44f-lab-reports
    ```
 
