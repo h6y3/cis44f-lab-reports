@@ -3,6 +3,7 @@
 import os
 import sys
 import re
+import json
 from pathlib import Path
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
@@ -10,6 +11,25 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib.enums import TA_CENTER
 from PIL import Image as PILImage
+
+def load_config():
+    """Load configuration from config.json"""
+    config_path = Path(__file__).parent / "config.json"
+    default_config = {
+        "student_name": "Your Name Here",
+        "course_code": "CIS44F",
+        "school": "De Anza College"
+    }
+    
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+            # Merge with defaults to handle missing keys
+            return {**default_config, **config}
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"Warning: Could not load config.json. Using default values.")
+        print(f"Run the installation script or create {config_path} to customize student information.")
+        return default_config
 
 def get_lab_description(lab_dir):
     """Extract lab description from directory name"""
@@ -76,6 +96,9 @@ def create_lab_report(lab_dir):
         print(f"Error: Lab directory '{lab_dir}' does not exist.")
         return False
     
+    # Load configuration
+    config = load_config()
+    
     # Output PDF path
     lab_description = get_lab_description(lab_dir)
     match = re.search(r'Lab(\w+)', lab_path.name)
@@ -123,8 +146,8 @@ def create_lab_report(lab_dir):
     story = []
     
     # Add header
-    story.append(Paragraph("Han-Shen Yuan", title_style))
-    story.append(Paragraph(f"CIS44F - {lab_description}", subtitle_style))
+    story.append(Paragraph(config["student_name"], title_style))
+    story.append(Paragraph(f"{config['course_code']} - {lab_description}", subtitle_style))
     story.append(Spacer(1, 20))
     
     # Get task folders

@@ -7,7 +7,7 @@ A Python-based tool for automatically generating professional PDF lab reports fr
 ```bash
 git clone https://github.com/h6y3/cis44f-lab-reports.git
 cd cis44f-lab-reports
-./install.sh
+./install.sh                    # Will prompt for your name and course info
 source lab_report_env/bin/activate
 python3 generate_lab_report.py Lab1
 ```
@@ -45,6 +45,7 @@ This tool automates the creation of lab reports by scanning directories containi
    ```bash
    ./install.sh
    ```
+   *The installer will prompt you to enter your name and course information which will be saved to `config.json`*
 
 3. **Activate the virtual environment:**
    ```bash
@@ -149,7 +150,7 @@ Generated reports include:
 
 Example header format:
 ```
-Han-Shen Yuan
+Your Name Here
 CIS44F - Lab 1
 
 Task 1
@@ -159,17 +160,38 @@ Task 2
 [Screenshots for Task 2]
 ```
 
-## Customization
+## Configuration
 
-### Modifying Student Information
+### Student Information Setup
 
-Edit the script to change the student name and course information:
+The tool uses a `config.json` file to store your personal information. This file is automatically created during installation, but you can also create or edit it manually:
 
-```python
-# In generate_lab_report.py, line ~120
-story.append(Paragraph("Your Name Here", title_style))
-story.append(Paragraph(f"CIS44F - {lab_description}", subtitle_style))
+```json
+{
+  "student_name": "Your Full Name",
+  "course_code": "CIS44F", 
+  "school": "De Anza College"
+}
 ```
+
+### Updating Your Information
+
+To change your name or course information:
+
+1. **Edit the config file directly:**
+   ```bash
+   nano config.json
+   # or
+   code config.json
+   ```
+
+2. **Re-run the installer:**
+   ```bash
+   rm config.json
+   ./install.sh
+   ```
+
+The configuration file is automatically excluded from git commits (in `.gitignore`) to keep your personal information private.
 
 ### Supported Image Formats
 
