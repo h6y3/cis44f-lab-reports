@@ -26,6 +26,7 @@ This tool automates the creation of lab reports by scanning directories containi
 - **Cross-Platform**: Works on macOS, Windows, and Linux
 - **Easy Installation**: Simple setup with virtual environment management
 - **Batch Processing**: Generate reports for multiple labs quickly
+- **Automated Screenshot Organization**: Smart tool to organize screenshots from any directory into proper lab/task structure
 
 ## Installation
 
@@ -145,6 +146,30 @@ This will prompt you for:
 - Lab number (e.g., 1, 6a, 6b)
 - Number of tasks
 
+### Organizing Screenshots
+
+The tool includes an automated screenshot organizer that can move screenshots from any directory (like Desktop) into the proper lab/task structure:
+
+```bash
+# First time setup - configure screenshot source directory
+python3 organize_screenshots.py --reconfigure
+
+# Organize screenshots into lab/task directories
+python3 organize_screenshots.py
+```
+
+**Supported Screenshot Formats:**
+- **Mac**: `Screen Shot YYYY-MM-DD at HH.MM.SS AM/PM.png`
+- **Windows**: `Screenshot YYYY-MM-DD HHMMSS.png` or `Annotation YYYY-MM-DD HHMMSS.png`
+- **Linux**: `Screenshot from YYYY-MM-DD HH-MM-SS.png`
+
+The organizer will:
+- Detect screenshots using platform-specific naming conventions
+- Prompt you for lab and task numbers
+- Move screenshots to the appropriate `Lab{N}/task {M}/` directory
+- Skip files that already exist (no overwrites)
+- Create task directories automatically if needed
+
 ## Report Format
 
 Generated reports include:
@@ -176,6 +201,16 @@ The tool uses a `config.json` file to store your personal information. This file
   "student_name": "Your Full Name",
   "course_code": "CIS44F", 
   "school": "De Anza College"
+}
+```
+
+### Screenshot Organization Setup
+
+The screenshot organizer uses `screenshot_config.json` to remember your screenshot source directory:
+
+```json
+{
+  "screenshot_source_directory": "/Users/username/Desktop"
 }
 ```
 
@@ -218,6 +253,12 @@ The configuration file is automatically excluded from git commits (in `.gitignor
 **No screenshots found**
 - Verify screenshots are in the correct task directories
 - Check file extensions are supported (.png, .jpg, .jpeg)
+- Use the screenshot organizer to move screenshots from your source directory
+
+**Screenshot organizer not finding screenshots**
+- Ensure screenshots follow platform naming conventions
+- Check that the source directory is correctly configured
+- Use `--reconfigure` to update the screenshot source directory
 
 ### Getting Help
 

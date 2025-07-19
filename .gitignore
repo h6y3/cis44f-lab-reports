@@ -150,8 +150,9 @@ Desktop.ini
 *.swo
 *~
 
-# Configuration file (contains personal information)
+# Configuration files (contain personal information)
 config.json
+screenshot_config.json
 
 # Generated PDFs (optional - uncomment if you don't want to track generated reports)
 # *.pdf
