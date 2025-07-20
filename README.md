@@ -159,9 +159,25 @@ python3 organize_screenshots.py
 ```
 
 **Supported Screenshot Formats:**
-- **Mac**: `Screen Shot YYYY-MM-DD at HH.MM.SS AM/PM.png`
-- **Windows**: `Screenshot YYYY-MM-DD HHMMSS.png` or `Annotation YYYY-MM-DD HHMMSS.png`
-- **Linux**: `Screenshot from YYYY-MM-DD HH-MM-SS.png`
+
+The organizer automatically detects screenshots across different operating systems and locale configurations:
+
+- **macOS**: 
+  - `Screen Shot YYYY-MM-DD at HH.MM.SS AM/PM.png` (traditional 12-hour)
+  - `Screen Shot YYYY-MM-DD at HH.MM.SS.png` (traditional 24-hour)
+  - `Screenshot YYYY-MM-DD at HH.MM.SS AM/PM.png` (modern 12-hour)
+  - `Screenshot YYYY-MM-DD at HH.MM.SS.png` (modern 24-hour)
+
+- **Windows**: 
+  - `Screenshot YYYY-MM-DD HHMMSS.png` (standard)
+  - `Annotation YYYY-MM-DD HHMMSS.png` (Snip & Sketch)
+  - Supports various locale date separators (-, ., /)
+
+- **Linux**: 
+  - `Screenshot from YYYY-MM-DD HH-MM-SS.png` (GNOME)
+  - Supports various time separators (-, :) and date separators
+
+**Note**: Screenshot filename formats depend on your system's locale and date/time settings. The tool automatically handles common regional variations.
 
 The organizer will:
 - Detect screenshots using platform-specific naming conventions
@@ -256,9 +272,10 @@ The configuration file is automatically excluded from git commits (in `.gitignor
 - Use the screenshot organizer to move screenshots from your source directory
 
 **Screenshot organizer not finding screenshots**
-- Ensure screenshots follow platform naming conventions
+- Ensure screenshots follow platform naming conventions (see supported formats above)
 - Check that the source directory is correctly configured
 - Use `--reconfigure` to update the screenshot source directory
+- If your screenshots still aren't detected, check the patterns in `organize_screenshots.py:78-92` and adjust them for your specific locale/system settings
 
 ### Getting Help
 

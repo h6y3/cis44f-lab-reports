@@ -76,11 +76,19 @@ class ScreenshotOrganizer:
     def detect_screenshots(self, directory):
         """Detect screenshots in directory based on naming conventions"""
         screenshot_patterns = [
-            r"^Screen Shot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2} (AM|PM)\.(png|jpg|jpeg)$",  # macOS
-            r"^Screenshot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2}\.(png|jpg|jpeg)$",  # macOS modern format
-            r"^Screenshot \d{4}-\d{2}-\d{2} \d{6}\.(png|jpg|jpeg)$",  # Windows
-            r"^Annotation \d{4}-\d{2}-\d{2} \d{6}\.(png|jpg|jpeg)$",  # Windows Snip & Sketch
-            r"^Screenshot from \d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2}\.(png|jpg|jpeg)$",  # Linux
+            # macOS patterns - support both 12-hour (AM/PM) and 24-hour formats
+            r"^Screen Shot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2} (AM|PM)\.(png|jpg|jpeg)$",  # macOS traditional 12-hour
+            r"^Screen Shot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2}\.(png|jpg|jpeg)$",  # macOS traditional 24-hour
+            r"^Screenshot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2} (AM|PM)\.(png|jpg|jpeg)$",  # macOS modern 12-hour
+            r"^Screenshot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2}\.(png|jpg|jpeg)$",  # macOS modern 24-hour
+            
+            # Windows patterns - support different locale date separators
+            r"^Screenshot \d{4}[-./]\d{2}[-./]\d{2} \d{6}\.(png|jpg|jpeg)$",  # Windows various locales
+            r"^Annotation \d{4}[-./]\d{2}[-./]\d{2} \d{6}\.(png|jpg|jpeg)$",  # Windows Snip & Sketch various locales
+            
+            # Linux GNOME patterns - support various time separators and formats
+            r"^Screenshot from \d{4}-\d{2}-\d{2} \d{2}[-:]\d{2}[-:]\d{2}\.(png|jpg|jpeg)$",  # Linux GNOME
+            r"^Screenshot from \d{4}[-./]\d{2}[-./]\d{2} \d{2}[-:]\d{2}[-:]\d{2}\.(png|jpg|jpeg)$",  # Linux GNOME locale variants
         ]
         
         screenshots = []
