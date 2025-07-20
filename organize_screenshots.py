@@ -77,6 +77,7 @@ class ScreenshotOrganizer:
         """Detect screenshots in directory based on naming conventions"""
         screenshot_patterns = [
             r"^Screen Shot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2} (AM|PM)\.(png|jpg|jpeg)$",  # macOS
+            r"^Screenshot \d{4}-\d{2}-\d{2} at \d{1,2}\.\d{2}\.\d{2}\.(png|jpg|jpeg)$",  # macOS modern format
             r"^Screenshot \d{4}-\d{2}-\d{2} \d{6}\.(png|jpg|jpeg)$",  # Windows
             r"^Annotation \d{4}-\d{2}-\d{2} \d{6}\.(png|jpg|jpeg)$",  # Windows Snip & Sketch
             r"^Screenshot from \d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2}\.(png|jpg|jpeg)$",  # Linux
